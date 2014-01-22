@@ -49,7 +49,7 @@ public class SignEditUtils {
 		colorCodes = string;
 	}
 
-	private String strip(String in) {
+	public static String strip(String in) {
 		return cleanColorCodes(ChatColor.stripColor(in));
 	}
 

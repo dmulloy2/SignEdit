@@ -1,6 +1,8 @@
 package net.timroden.signedit.commands;
 
 import java.util.logging.Level;
+
+import net.timroden.signedit.Config;
 import net.timroden.signedit.SignEdit;
 import net.timroden.signedit.data.LogType;
 import net.timroden.signedit.data.SignEditDataPackage;
@@ -149,9 +151,29 @@ public class CommandSignEdit implements CommandExecutor {
 				return true;
 			}
 
-			if (line.length() > 15) {
+			
+			
+			if (Config.truncateLines && SignEditUtils.strip(line).length() > 15) {
 				player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("truncating"));
 				line = line.substring(0, 15);
+				
+				/*
+				// We want to keep the chat codes so only the displayable text is 15 characters long. 
+				// nm, turns out signs won't display all the text.
+				String tLine = "";
+				int tl=0;
+				for (int i=0; i < line.length(); i++){
+					if (line.substring(i, i+1).equalsIgnoreCase("&")){
+						tl -= 1;
+					}else
+						tl += 1;
+					if (tl > 15)
+						break;
+					tLine += line.substring(i, i+1);
+				}
+				line = tLine;
+				*/
+				
 			}
 			this.plugin.log.logAll(player.getName(), this.utils.implode(args, " ", 0, args.length), LogType.PLAYERCOMMAND, Level.INFO);
 			SignEditDataPackage tmp = new SignEditDataPackage(player.getName(), SignFunction.EDIT, line, Integer.parseInt(args[0]) - 1);

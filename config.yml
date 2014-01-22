@@ -19,3 +19,5 @@ signedit:
     metrics: true
     
     fireBlockBreakPlace: true
+
+    truncateLines: true

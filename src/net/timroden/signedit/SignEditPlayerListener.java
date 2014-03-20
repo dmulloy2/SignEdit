@@ -64,7 +64,7 @@ public class SignEditPlayerListener implements Listener {
 			}
 			String[] lines = dataPack.getLines();
 
-			if (this.utils.throwSignChange(block, player, sign.getLines()).booleanValue()) {
+			if (this.utils.throwSignChange(block, player, lines).booleanValue()) {
 				player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasteError"));
 				this.plugin.playerData.remove(player.getName());
 				return;
@@ -78,8 +78,8 @@ public class SignEditPlayerListener implements Listener {
 			int amount = dataPack.getAmount();
 
 			amount--;
-			if (amount == 0) {
-				this.utils.throwSignChange(block, player, sign.getLines());
+			if (amount == 0) {// Why are we doing this again at 0? who knows.
+				this.utils.throwSignChange(block, player, lines);
 				player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasted") + " " + this.plugin.localization.get("pasteEmpty"));
 				this.plugin.playerData.remove(player.getName());
 				return;
@@ -99,7 +99,7 @@ public class SignEditPlayerListener implements Listener {
 			}
 			String[] lines = dataPack.getLines();
 
-			if (this.utils.throwSignChange(block, player, sign.getLines()).booleanValue()) {
+			if (this.utils.throwSignChange(block, player, lines).booleanValue()) {
 				player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasteError"));
 				this.plugin.playerData.remove(player.getName());
 				return;

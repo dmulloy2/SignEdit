@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>SignEdit</groupId>
   <artifactId>SignEdit</artifactId>
-  <version>3.3.4</version>
+  <version>3.3.10</version>
   <name>SignEdit</name>
   <description>Edit signs in Minecraft.</description>
   <build>

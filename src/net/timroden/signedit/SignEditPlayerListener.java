@@ -64,12 +64,15 @@ public class SignEditPlayerListener implements Listener {
 			}
 			String[] lines = dataPack.getLines();
 
-			if (this.utils.throwSignChange(block, player, lines).booleanValue()) {
-				player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasteError"));
-				this.plugin.playerData.remove(player.getName());
-				return;
+			if (!player.hasPermission("signedit.override"))
+			{
+				if (this.utils.throwSignChange(block, player, lines).booleanValue()) {
+					player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasteError"));
+					this.plugin.playerData.remove(player.getName());
+					return;
+				}
 			}
-
+			
 			for (int i = 0; i < lines.length; i++) {
 				sign.setLine(i, lines[i]);
 			}
@@ -99,12 +102,15 @@ public class SignEditPlayerListener implements Listener {
 			}
 			String[] lines = dataPack.getLines();
 
-			if (this.utils.throwSignChange(block, player, lines).booleanValue()) {
-				player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasteError"));
-				this.plugin.playerData.remove(player.getName());
-				return;
+			if (!player.hasPermission("signedit.override"))
+			{
+				if (this.utils.throwSignChange(block, player, lines).booleanValue()) {
+					player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasteError"));
+					this.plugin.playerData.remove(player.getName());
+					return;
+				}
 			}
-
+			
 			for (int i = 0; i < lines.length; i++) {
 				sign.setLine(i, lines[i]);
 			}
@@ -121,10 +127,13 @@ public class SignEditPlayerListener implements Listener {
 			String newText = dataPack.getLine();
 			existingLines[line] = newText;
 
-			if (this.utils.throwSignChange(block, player, existingLines).booleanValue()) {
-				player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("editError"));
-				this.plugin.playerData.remove(player.getName());
-				return;
+			if (!player.hasPermission("signedit.override"))
+			{
+				if (this.utils.throwSignChange(block, player, existingLines).booleanValue()) {
+					player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("editError"));
+					this.plugin.playerData.remove(player.getName());
+					return;
+				}
 			}
 
 			sign.setLine(line, ChatColor.translateAlternateColorCodes('&', newText));

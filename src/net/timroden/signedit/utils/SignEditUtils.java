@@ -7,7 +7,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -55,20 +54,20 @@ public class SignEditUtils {
 
 	public Boolean throwSignChange(Block theBlock, Player thePlayer, String[] theLines) {
 		if (Config.fireBlockBreakPlace() == true) {
-			
+
 			BlockBreakEvent b = new BlockBreakEvent(theBlock, thePlayer);
 			this.plugin.pluginMan.callEvent(b);
-			
+
 			if (b.isCancelled()) {
 				plugin.log.info("[BLOCKED] Another plugin blocked the BlockBreak check.");
 				return true;
 			}
 
 			BlockPlaceEvent p = new BlockPlaceEvent(theBlock, theBlock.getState(), theBlock, null, thePlayer, true);
-			
+
 			this.plugin.pluginMan.callEvent(p);
-			
-			if(p.isCancelled()) {
+
+			if (p.isCancelled()) {
 				plugin.log.info("[BLOCKED] Another plugin blocked the BlockPlace check.");
 				return true;
 			}
@@ -84,21 +83,17 @@ public class SignEditUtils {
 				plugin.log.info("[BLOCKED] Another plugin modified line " + (i + 1) + ": " + strip(orginialLines[i]) + " to " + strip(theLines[i]));
 				return true;
 			}
-		}	
+		}
 
 		return Boolean.valueOf(event.isCancelled());
 	}
 
 	public boolean isSign(Block b) {
-		return (b.getType().equals(Material.SIGN))
-				|| (b.getType().equals(Material.SIGN_POST))
-				|| (b.getType().equals(Material.WALL_SIGN));
+		return (b.getType().equals(Material.SIGN)) || (b.getType().equals(Material.SIGN_POST)) || (b.getType().equals(Material.WALL_SIGN));
 	}
 
 	public boolean shouldCancel(Player player) {
-		boolean ret = (Config.ignoreCreative())
-				&& (!this.plugin.config.invertMouse())
-				&& (player.getGameMode().equals(GameMode.CREATIVE));
+		boolean ret = (Config.ignoreCreative()) && (!this.plugin.config.invertMouse()) && (player.getGameMode().equals(GameMode.CREATIVE));
 		return ret;
 	}
 

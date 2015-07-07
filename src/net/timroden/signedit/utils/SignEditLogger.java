@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import net.timroden.signedit.Config;
 import net.timroden.signedit.SignEdit;
 import net.timroden.signedit.data.LogType;
@@ -25,20 +26,16 @@ public class SignEditLogger {
 		this.log = plugin.getLogger();
 	}
 
-	public void logAll(String thePlayer, String theCommand, LogType theType,
-			Level level) {
+	public void logAll(String thePlayer, String theCommand, LogType theType, Level level) {
 		String theMessage = thePlayer + ": /signedit " + theCommand;
 
 		if (theType.equals(LogType.PLAYERCOMMAND))
-			theMessage = this.plugin.localization.get("playerCommand") + " "
-					+ thePlayer + ": /signedit " + theCommand;
+			theMessage = this.plugin.localization.get("playerCommand") + " " + thePlayer + ": /signedit " + theCommand;
 		else if (theType.equals(LogType.SIGNCHANGE)) {
-			theMessage = this.plugin.localization.get("signChange") + " "
-					+ thePlayer + theCommand;
+			theMessage = this.plugin.localization.get("signChange") + " " + thePlayer + theCommand;
 		}
 		if (Config.commandsLogFile()) {
-			logFile("[" + this.dateFormat.format(new Date()) + "] "
-					+ theMessage);
+			logFile("[" + this.dateFormat.format(new Date()) + "] " + theMessage);
 		}
 		if (Config.commandsLogConsole())
 			log(level, theMessage);
@@ -57,15 +54,11 @@ public class SignEditLogger {
 
 	private void openFileOutput() {
 		try {
-			this.logFile = new File(this.plugin.getDataFolder(),
-					Config.logName());
+			this.logFile = new File(this.plugin.getDataFolder(), Config.logName());
 			if (!this.logFile.exists()) {
 				this.logFile.createNewFile();
 			}
-			this.fileOut = new BufferedWriter(new FileWriter(
-					this.plugin.getDataFolder()
-							+ System.getProperty("file.separator")
-							+ Config.logName(), true));
+			this.fileOut = new BufferedWriter(new FileWriter(this.plugin.getDataFolder() + System.getProperty("file.separator") + Config.logName(), true));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

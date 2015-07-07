@@ -19,8 +19,7 @@ public class Config {
 	private static String locale;
 	private static boolean fireBlockBreakPlace;
 	public static boolean truncateLines;
-	
-	
+
 	public Config(SignEdit plugin) {
 		this.plugin = plugin;
 		config = plugin.getConfig().options().configuration();
@@ -57,9 +56,9 @@ public class Config {
 			clickAction = Action.RIGHT_CLICK_BLOCK;
 		else
 			clickAction = Action.LEFT_CLICK_BLOCK;
-		
+
 		truncateLines = config.getBoolean("signedit.truncateLines");
-		
+
 	}
 
 	public static boolean fireBlockBreakPlace() {
@@ -111,7 +110,6 @@ public class Config {
 	}
 
 	public String clickActionStr() {
-		return invertMouse ? this.plugin.localization.get("clickRight")
-				: this.plugin.localization.get("clickLeft");
+		return invertMouse ? this.plugin.localization.get("clickRight") : this.plugin.localization.get("clickLeft");
 	}
 }

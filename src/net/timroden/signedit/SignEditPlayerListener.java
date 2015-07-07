@@ -1,10 +1,12 @@
 package net.timroden.signedit;
 
 import java.util.logging.Level;
+
 import net.timroden.signedit.data.LogType;
 import net.timroden.signedit.data.SignEditDataPackage;
 import net.timroden.signedit.data.SignFunction;
 import net.timroden.signedit.utils.SignEditUtils;
+
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -49,7 +51,9 @@ public class SignEditPlayerListener implements Listener {
 			}
 			SignEditDataPackage tmp = new SignEditDataPackage(player.getName(), sign.getLines(), dataPack.getAmount(), SignFunction.PASTE);
 			this.plugin.playerData.put(player.getName(), tmp);
-			player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("copySignAdded", new Object[] { this.plugin.config.clickActionStr() }));
+			player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("copySignAdded", new Object[] {
+				this.plugin.config.clickActionStr()
+			}));
 		} else if (function.equals(SignFunction.COPYPERSIST)) {
 			if (this.utils.shouldCancel(player)) {
 				event.setCancelled(true);
@@ -57,22 +61,23 @@ public class SignEditPlayerListener implements Listener {
 			}
 			SignEditDataPackage tmp = new SignEditDataPackage(player.getName(), SignFunction.PASTEPERSIST, sign.getLines());
 			this.plugin.playerData.put(player.getName(), tmp);
-			player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("copySignAdded", new Object[] { this.plugin.config.clickActionStr() }));
+			player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("copySignAdded", new Object[] {
+				this.plugin.config.clickActionStr()
+			}));
 		} else if (function.equals(SignFunction.PASTE)) {
 			if (this.utils.shouldCancel(player)) {
 				event.setCancelled(true);
 			}
 			String[] lines = dataPack.getLines();
 
-			if (!player.hasPermission("signedit.override"))
-			{
+			if (!player.hasPermission("signedit.override")) {
 				if (this.utils.throwSignChange(block, player, lines).booleanValue()) {
 					player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasteError"));
 					this.plugin.playerData.remove(player.getName());
 					return;
 				}
 			}
-			
+
 			for (int i = 0; i < lines.length; i++) {
 				sign.setLine(i, lines[i]);
 			}
@@ -89,33 +94,30 @@ public class SignEditPlayerListener implements Listener {
 			}
 			SignEditDataPackage tmp = new SignEditDataPackage(player.getName(), lines, amount, SignFunction.PASTE);
 			this.plugin.playerData.put(player.getName(), tmp);
-			player.sendMessage(this.plugin.chatPrefix
-				+ this.plugin.localization.get("pasted")
-				+ " "
-				+ this.plugin.localization.get(
-					"pasteCopiesLeft",
-					new Object[] { Integer.valueOf(amount),
-						amount == 1 ? this.plugin.localization.get("pasteCopyStr") : this.plugin.localization.get("pasteCopiesStr") }));
+			player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasted") + " " + this.plugin.localization.get("pasteCopiesLeft", new Object[] {
+					Integer.valueOf(amount), amount == 1 ? this.plugin.localization.get("pasteCopyStr") : this.plugin.localization.get("pasteCopiesStr")
+			}));
 		} else if (function.equals(SignFunction.PASTEPERSIST)) {
 			if (this.utils.shouldCancel(player)) {
 				event.setCancelled(true);
 			}
 			String[] lines = dataPack.getLines();
 
-			if (!player.hasPermission("signedit.override"))
-			{
+			if (!player.hasPermission("signedit.override")) {
 				if (this.utils.throwSignChange(block, player, lines).booleanValue()) {
 					player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasteError"));
 					this.plugin.playerData.remove(player.getName());
 					return;
 				}
 			}
-			
+
 			for (int i = 0; i < lines.length; i++) {
 				sign.setLine(i, lines[i]);
 			}
 			sign.update();
-			player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasteCopiesLeft", new Object[] { "∞", "copies" }));
+			player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("pasteCopiesLeft", new Object[] {
+					"∞", "copies"
+			}));
 		} else if (function.equals(SignFunction.EDIT)) {
 			if (this.utils.shouldCancel(player)) {
 				event.setCancelled(true);
@@ -127,8 +129,7 @@ public class SignEditPlayerListener implements Listener {
 			String newText = dataPack.getLine();
 			existingLines[line] = newText;
 
-			if (!player.hasPermission("signedit.override"))
-			{
+			if (!player.hasPermission("signedit.override")) {
 				if (this.utils.throwSignChange(block, player, existingLines).booleanValue()) {
 					player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("editError"));
 					this.plugin.playerData.remove(player.getName());
@@ -138,10 +139,7 @@ public class SignEditPlayerListener implements Listener {
 
 			sign.setLine(line, ChatColor.translateAlternateColorCodes('&', newText));
 
-			this.plugin.log.logAll(player.getName(),
-				": (" + sign.getLocation().getBlockX() + ", " + sign.getLocation().getBlockY() + ", " + sign.getLocation().getBlockZ() + ", "
-					+ player.getWorld().getName() + ") \"" + originalLine + "\" " + this.plugin.localization.get("logChangedTo") + " \"" + newText + "\"",
-				LogType.SIGNCHANGE, Level.INFO);
+			this.plugin.log.logAll(player.getName(), ": (" + sign.getLocation().getBlockX() + ", " + sign.getLocation().getBlockY() + ", " + sign.getLocation().getBlockZ() + ", " + player.getWorld().getName() + ") \"" + originalLine + "\" " + this.plugin.localization.get("logChangedTo") + " \"" + newText + "\"", LogType.SIGNCHANGE, Level.INFO);
 			sign.update();
 			player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("editChanged"));
 			this.plugin.playerData.remove(player.getName());

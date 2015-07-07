@@ -1,6 +1,5 @@
 package net.timroden.signedit;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +12,6 @@ import net.timroden.signedit.utils.SignEditUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.mcstats.Metrics;
 
 import com.cyprias.YML;
 
@@ -39,14 +37,14 @@ public class SignEdit extends JavaPlugin {
 
 		this.listener = new SignEditPlayerListener(this);
 
-		if (config.useMetrics()) {
+		/* if (config.useMetrics()) {
 			try {
 				Metrics metrics = new Metrics(this);
 				metrics.start();
 			} catch (IOException e) {
 				this.log.severe(this.localization.get("metricsError"));
 			}
-		}
+		} */
 
 		this.pluginMan = getServer().getPluginManager();
 

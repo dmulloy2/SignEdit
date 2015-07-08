@@ -1,8 +1,8 @@
 package net.timroden.signedit.data;
 
 public class SignEditDataPackage {
-	private String playerName;
-	private SignFunction function;
+	private final String playerName;
+	private final SignFunction function;
 	private String line;
 	private String[] lines;
 	private int lineNum;
@@ -47,26 +47,26 @@ public class SignEditDataPackage {
 	}
 
 	public String getPlayerName() {
-		return this.playerName;
+		return playerName;
 	}
 
 	public SignFunction getFunction() {
-		return this.function;
+		return function;
 	}
 
 	public String[] getLines() {
-		return this.lines;
+		return lines;
 	}
 
 	public String getLine() {
-		return this.line;
+		return line;
 	}
 
 	public int getLineNum() {
-		return this.lineNum;
+		return lineNum;
 	}
 
 	public int getAmount() {
-		return this.amount;
+		return amount;
 	}
 }

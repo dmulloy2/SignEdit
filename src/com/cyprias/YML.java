@@ -18,13 +18,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import com.google.common.base.Charsets;
 
 public class YML {
-	private SignEdit plugin;
+	private final SignEdit plugin;
 
-	private Map<String, File> Files = new HashMap<String, File>();
-	private Map<String, FileConfiguration> FileConfigs = new HashMap<String, FileConfiguration>();
+	private final Map<String, File> Files = new HashMap<String, File>();
+	private final Map<String, FileConfiguration> FileConfigs = new HashMap<String, FileConfiguration>();
 
 	public YML(SignEdit monarchy) {
-		this.plugin = monarchy;
+		plugin = monarchy;
 	}
 
 	public boolean reloadYMLConfig(String file) {
@@ -118,8 +118,7 @@ public class YML {
 			value = locales.getString(key);
 
 			if (targetConfig.getString(key) == null) {
-				plugin.log.info("Copying new locale key [" + key + "]=[" + value + "] to " + fileName);
-
+				// plugin.log.info("Copying new locale key [" + key + "]=[" + value + "] to " + fileName);
 				targetConfig.set(key, value);
 				save = true;
 			}

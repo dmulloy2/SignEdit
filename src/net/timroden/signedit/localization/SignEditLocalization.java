@@ -10,7 +10,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class SignEditLocalization {
-	private SignEdit plugin;
+	private final SignEdit plugin;
 
 	public static Map<String, String> Strings = new HashMap<String, String>();
 

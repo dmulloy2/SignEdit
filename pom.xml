@@ -30,6 +30,16 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <targetPath>.</targetPath>
+        <directory>${basedir}</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>*.yml</include>
+        </includes>
+      </resource>
+    </resources>
   </build>
 
   <dependencies>

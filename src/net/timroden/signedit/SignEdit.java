@@ -6,7 +6,6 @@ import java.util.Map;
 import net.timroden.signedit.commands.CommandSignEdit;
 import net.timroden.signedit.data.SignEditDataPackage;
 import net.timroden.signedit.localization.SignEditLocalization;
-import net.timroden.signedit.utils.SignEditLogger;
 import net.timroden.signedit.utils.SignEditUtils;
 
 import org.bukkit.ChatColor;
@@ -18,41 +17,35 @@ import com.cyprias.YML;
 public class SignEdit extends JavaPlugin {
 	public String chatPrefix = ChatColor.RESET + "[" + ChatColor.AQUA + "SignEdit" + ChatColor.WHITE + "] " + ChatColor.RESET;
 	public PluginManager pluginMan;
-	public Map<String, SignEditDataPackage> playerData = new HashMap<String, SignEditDataPackage>();
+	public Map<String, SignEditDataPackage> playerData;
 	public Map<String, Integer> pasteAmounts = new HashMap<String, Integer>();
 	private SignEditPlayerListener listener;
-	public SignEditLogger log;
 	public SignEditUtils utils;
 	public SignEditLocalization localization;
 	public Config config;
 	public YML yml;
 
+	@Override
 	public void onEnable() {
-		this.config = new Config(this);
-		this.yml = new YML(this);
-		this.localization = new SignEditLocalization(this);
+		playerData = new HashMap<String, SignEditDataPackage>();
+		config = new Config(this);
+		yml = new YML(this);
+		localization = new SignEditLocalization(this);
 
-		this.utils = new SignEditUtils(this);
-		this.log = new SignEditLogger(this);
+		utils = new SignEditUtils(this);
 
-		this.listener = new SignEditPlayerListener(this);
+		listener = new SignEditPlayerListener(this);
 
-		/* if (config.useMetrics()) {
-			try {
-				Metrics metrics = new Metrics(this);
-				metrics.start();
-			} catch (IOException e) {
-				this.log.severe(this.localization.get("metricsError"));
-			}
-		} */
+		pluginMan = getServer().getPluginManager();
 
-		this.pluginMan = getServer().getPluginManager();
-
-		this.pluginMan.registerEvents(this.listener, this);
+		pluginMan.registerEvents(listener, this);
 
 		getCommand("signedit").setExecutor(new CommandSignEdit(this));
 	}
 
+	@Override
 	public void onDisable() {
+		playerData.clear();
+		playerData = null;
 	}
 }

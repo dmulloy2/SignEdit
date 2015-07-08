@@ -4,7 +4,7 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.event.block.Action;
 
 public class Config {
-	private SignEdit plugin;
+	private final SignEdit plugin;
 	private static Configuration config;
 	private static boolean ignoreCreative;
 	private static boolean invertMouse;
@@ -30,10 +30,10 @@ public class Config {
 	}
 
 	public void reload() {
-		this.plugin.reloadConfig();
-		config = this.plugin.getConfig().options().configuration();
+		plugin.reloadConfig();
+		config = plugin.getConfig().options().configuration();
 		config.options().copyDefaults(true);
-		this.plugin.saveConfig();
+		plugin.saveConfig();
 
 		getOpts();
 	}
@@ -110,6 +110,6 @@ public class Config {
 	}
 
 	public String clickActionStr() {
-		return invertMouse ? this.plugin.localization.get("clickRight") : this.plugin.localization.get("clickLeft");
+		return invertMouse ? plugin.localization.get("clickRight") : plugin.localization.get("clickLeft");
 	}
 }

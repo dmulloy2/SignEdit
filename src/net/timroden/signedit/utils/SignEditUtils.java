@@ -13,7 +13,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
 public class SignEditUtils {
-	private SignEdit plugin;
+	private final SignEdit plugin;
 
 	public SignEditUtils(SignEdit plugin) {
 		this.plugin = plugin;
@@ -22,65 +22,47 @@ public class SignEditUtils {
 	public boolean isInt(String check) {
 		try {
 			Integer.parseInt(check);
-		} catch (NumberFormatException ignored) {
+		} catch (NumberFormatException ex) {
 			return false;
 		}
+
 		return true;
 	}
 
-	public static final String cleanColorCodes(String mess) {
-		return mess.replaceAll("(&([" + colorCodes + "]))", "");
-	}
-
-	private static final String colorCodes;
-
-	static {
-		String string = "";
-		for (ChatColor color : ChatColor.values()) {
-			char c = color.getChar();
-			if (!Character.isLetter(c)) {
-				string += c;
-			} else {
-				string += Character.toUpperCase(c);
-				string += Character.toLowerCase(c);
-			}
-		}
-		colorCodes = string;
-	}
-
 	public static String strip(String in) {
-		return cleanColorCodes(ChatColor.stripColor(in));
+		// return cleanColorCodes(ChatColor.stripColor(in));
+		return ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', in));
 	}
 
 	public Boolean throwSignChange(Block theBlock, Player thePlayer, String[] theLines) {
-		if (Config.fireBlockBreakPlace() == true) {
-
+		if (Config.fireBlockBreakPlace()) {
 			BlockBreakEvent b = new BlockBreakEvent(theBlock, thePlayer);
-			this.plugin.pluginMan.callEvent(b);
+			plugin.pluginMan.callEvent(b);
 
 			if (b.isCancelled()) {
-				plugin.log.info("[BLOCKED] Another plugin blocked the BlockBreak check.");
+				plugin.getLogger().info("[Blocked] Another plugin blocked the block break check.");
 				return true;
 			}
 
 			BlockPlaceEvent p = new BlockPlaceEvent(theBlock, theBlock.getState(), theBlock, null, thePlayer, true);
 
-			this.plugin.pluginMan.callEvent(p);
+			plugin.pluginMan.callEvent(p);
 
 			if (p.isCancelled()) {
-				plugin.log.info("[BLOCKED] Another plugin blocked the BlockPlace check.");
+				plugin.getLogger().info("[Blocked] Another plugin blocked the block place check.");
 				return true;
 			}
 		}
 
-		String[] orginialLines = theLines.clone();
+		String[] originalLines = theLines.clone();
 
 		SignChangeEvent event = new SignChangeEvent(theBlock, thePlayer, theLines);
-		this.plugin.pluginMan.callEvent(event);
+		plugin.pluginMan.callEvent(event);
 
 		for (int i = 0; i < theLines.length; i++) {
-			if (!strip(theLines[i]).equalsIgnoreCase(strip(orginialLines[i]))) {
-				plugin.log.info("[BLOCKED] Another plugin modified line " + (i + 1) + ": " + strip(orginialLines[i]) + " to " + strip(theLines[i]));
+			if (!strip(theLines[i]).equalsIgnoreCase(strip(originalLines[i]))) {
+				plugin.getLogger().info(String.format("[Blocked] Another plugin modified line %s: %s to %s",
+						i + 1, strip(originalLines[i]), strip(theLines[i])));
 				return true;
 			}
 		}
@@ -89,11 +71,11 @@ public class SignEditUtils {
 	}
 
 	public boolean isSign(Block b) {
-		return (b.getType().equals(Material.SIGN)) || (b.getType().equals(Material.SIGN_POST)) || (b.getType().equals(Material.WALL_SIGN));
+		return b.getType().equals(Material.SIGN) || b.getType().equals(Material.SIGN_POST) || b.getType().equals(Material.WALL_SIGN);
 	}
 
 	public boolean shouldCancel(Player player) {
-		boolean ret = (Config.ignoreCreative()) && (!this.plugin.config.invertMouse()) && (player.getGameMode().equals(GameMode.CREATIVE));
+		boolean ret = Config.ignoreCreative() && !plugin.config.invertMouse() && player.getGameMode().equals(GameMode.CREATIVE);
 		return ret;
 	}
 

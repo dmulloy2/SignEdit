@@ -1,5 +1,6 @@
-#enUS (English, US) Locale file for SignEdit
-#Compiled by Timr
+# enUS (English, US) Locale file for SignEdit
+# Compiled by dmulloy2, originally by TimR
+
 metricsError: "&cError enabling Metrics"
 copySignAdded: "&7Sign added to clip board, %s a sign to paste"
 pasteError: "&cCould not paste sign"
@@ -30,7 +31,7 @@ defaultCopyPunch: "&7%s your sign to copy. Making default amount of %s %s"
 intCopyPunch: "&7%s your sign to copy. Making %s %s"
 invalidLine: "&c%s isn't a valid line number! Please enter a valid line number (1-4)"
 punchToComplete: "&7Text saved. %s a sign to complete your changes"
-truncating: "&7Truncating line to 15 characters"
+truncating: "&7Truncating line to 90 character width"
 commandsAvailable: "&aAvailable commands:"
 commandsHeader: "&7When altering signs, %s to apply changes"
 commandsDef: "&7/signedit <line> <text> - Changes the text on the specified line"

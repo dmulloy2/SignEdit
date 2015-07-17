@@ -5,3 +5,4 @@
 
 #Nobody wants the .class files, anyway
 /bin
+/target

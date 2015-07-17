@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,8 @@ import net.timroden.signedit.SignEdit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import com.google.common.base.Charsets;
 
 public class YML {
 	private SignEdit plugin;
@@ -97,9 +100,10 @@ public class YML {
 			return;
 		
 		YamlConfiguration locales = new YamlConfiguration();
+		InputStreamReader reader = new InputStreamReader(in, Charsets.UTF_8);
 		
 		try {
-			locales.load(in);
+			locales.load(reader);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InvalidConfigurationException e) {

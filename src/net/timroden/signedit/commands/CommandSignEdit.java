@@ -8,11 +8,13 @@ import net.timroden.signedit.data.LogType;
 import net.timroden.signedit.data.SignEditDataPackage;
 import net.timroden.signedit.data.SignFunction;
 import net.timroden.signedit.utils.SignEditUtils;
+
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.map.MinecraftFont;
 
 public class CommandSignEdit implements CommandExecutor {
 	private SignEdit plugin;
@@ -151,30 +153,21 @@ public class CommandSignEdit implements CommandExecutor {
 				return true;
 			}
 
-			
-			
-			if (Config.truncateLines && SignEditUtils.strip(line).length() > 15) {
-				player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("truncating"));
-				line = line.substring(0, 15);
-				
-				/*
-				// We want to keep the chat codes so only the displayable text is 15 characters long. 
-				// nm, turns out signs won't display all the text.
-				String tLine = "";
-				int tl=0;
-				for (int i=0; i < line.length(); i++){
-					if (line.substring(i, i+1).equalsIgnoreCase("&")){
-						tl -= 1;
-					}else
-						tl += 1;
-					if (tl > 15)
-						break;
-					tLine += line.substring(i, i+1);
+			if (Config.truncateLines) {
+				boolean truncated = false;
+				MinecraftFont font = MinecraftFont.Font;
+
+				while (font.getWidth(SignEditUtils.strip(line)) > 90) {
+					// Take the last character off until it's a suitable width
+					line = line.substring(0, line.length() - 1);
+					truncated = true;
 				}
-				line = tLine;
-				*/
-				
+
+				if (truncated) {
+					player.sendMessage(plugin.chatPrefix + plugin.localization.get("truncating"));
+				}
 			}
+
 			this.plugin.log.logAll(player.getName(), this.utils.implode(args, " ", 0, args.length), LogType.PLAYERCOMMAND, Level.INFO);
 			SignEditDataPackage tmp = new SignEditDataPackage(player.getName(), SignFunction.EDIT, line, Integer.parseInt(args[0]) - 1);
 			this.plugin.playerData.put(player.getName(), tmp);

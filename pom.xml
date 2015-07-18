@@ -6,6 +6,7 @@
   <version>3.3.10</version>
   <name>SignEdit</name>
   <description>Edit signs in Minecraft.</description>
+
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
@@ -18,7 +19,18 @@
         </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <targetPath>.</targetPath>
+        <directory>${basedir}</directory>
+        <filtering>true</filtering>
+        <includes>
+          <include>*.yml</include>
+        </includes>
+      </resource>
+    </resources>
   </build>
+
   <dependencies>
     <dependency>
       <groupId>org.spigotmc</groupId>
@@ -26,6 +38,7 @@
       <version>1.8.7-R0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
+
   <repositories>
     <repository>
       <id>spigot-repo</id>

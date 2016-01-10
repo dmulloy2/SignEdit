@@ -97,15 +97,15 @@ public class CommandSignEdit implements CommandExecutor {
 				}
 				this.plugin.log.logAll(player.getName(), "copy " + args[1], LogType.PLAYERCOMMAND, Level.INFO);
 				if (!this.utils.isInt(args[1])) {
-					SignEditDataPackage tmp = new SignEditDataPackage(player.getName(), SignFunction.COPY, ((Integer) this.plugin.pasteAmounts.get(player
-						.getName())).intValue());
+					SignEditDataPackage tmp = new SignEditDataPackage(player.getName(), SignFunction.COPY, this.plugin.pasteAmounts.get(player
+						.getName()).intValue());
 					this.plugin.playerData.put(player.getName(), tmp);
 					player.sendMessage(this.plugin.chatPrefix + this.plugin.localization.get("invalidNumber", new Object[] { args[1] }));
 					player.sendMessage(this.plugin.chatPrefix
 						+ this.plugin.localization.get("defaultCopyPunch", new Object[] {
 							this.utils.capitalize(this.plugin.config.clickActionStr()),
 							this.plugin.pasteAmounts.get(player.getName()),
-							((Integer) this.plugin.pasteAmounts.get(player.getName())).intValue() == 1 ? this.plugin.localization.get("pasteCopyStr")
+							this.plugin.pasteAmounts.get(player.getName()).intValue() == 1 ? this.plugin.localization.get("pasteCopyStr")
 								: this.plugin.localization.get("pasteCopiesStr") }));
 					return true;
 				}
@@ -119,14 +119,14 @@ public class CommandSignEdit implements CommandExecutor {
 			}
 
 			this.plugin.log.logAll(player.getName(), "copy", LogType.PLAYERCOMMAND, Level.INFO);
-			int amt = ((Integer) this.plugin.pasteAmounts.get(player.getName())).intValue();
+			int amt = this.plugin.pasteAmounts.get(player.getName()).intValue();
 			SignEditDataPackage tmp = new SignEditDataPackage(player.getName(), SignFunction.COPY, amt);
 			this.plugin.playerData.put(player.getName(), tmp);
 			player.sendMessage(this.plugin.chatPrefix
 				+ this.plugin.localization.get("defaultCopyPunch", new Object[] {
 					this.utils.capitalize(this.plugin.config.clickActionStr()),
 					this.plugin.pasteAmounts.get(player.getName()),
-					((Integer) this.plugin.pasteAmounts.get(player.getName())).intValue() == 1 ? this.plugin.localization.get("pasteCopyStr")
+					this.plugin.pasteAmounts.get(player.getName()).intValue() == 1 ? this.plugin.localization.get("pasteCopyStr")
 						: this.plugin.localization.get("pasteCopiesStr") }));
 			return true;
 		}
@@ -142,7 +142,7 @@ public class CommandSignEdit implements CommandExecutor {
 				return true;
 			}
 
-			line = this.utils.implode(args, " ", 1, args.length);
+			line = this.utils.implode(args, " ", 1);
 
 			if (line == null) {
 				this.plugin.log.logAll(player.getName(), args[0], LogType.PLAYERCOMMAND, Level.INFO);
@@ -168,7 +168,7 @@ public class CommandSignEdit implements CommandExecutor {
 				}
 			}
 
-			this.plugin.log.logAll(player.getName(), this.utils.implode(args, " ", 0, args.length), LogType.PLAYERCOMMAND, Level.INFO);
+			this.plugin.log.logAll(player.getName(), this.utils.implode(args, " ", 0), LogType.PLAYERCOMMAND, Level.INFO);
 			SignEditDataPackage tmp = new SignEditDataPackage(player.getName(), SignFunction.EDIT, line, Integer.parseInt(args[0]) - 1);
 			this.plugin.playerData.put(player.getName(), tmp);
 			player.sendMessage(this.plugin.chatPrefix

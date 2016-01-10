@@ -81,7 +81,7 @@ public class SignEditUtils {
 		return ret;
 	}
 
-	public String implode(String[] inputArray, String glue, int start, int end) {
+	public String implode(String[] inputArray, String glue, int start) {
 		if (inputArray.length - 1 == 0) {
 			return null;
 		}

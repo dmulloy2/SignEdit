@@ -38,7 +38,7 @@ public class SignEditPlayerListener implements Listener {
 			return;
 		}
 		Sign sign = (Sign) block.getState();
-		dataPack = (SignEditDataPackage) this.plugin.playerData.get(player.getName());
+		dataPack = plugin.playerData.get(player.getName());
 
 		SignFunction function = dataPack.getFunction();
 
